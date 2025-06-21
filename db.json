@@ -7,12 +7,6 @@
       "id": 1
     },
     {
-      "title": "My first Post",
-      "content": "This My first official post!",
-      "author": "Jannet Okoth",
-      "id": 2
-    },
-    {
       "title": "CRAZZY!!",
       "content": "Someone just handed me 10000 kes!!! What should i do gang?",
       "author": "Trevor",
@@ -29,6 +23,12 @@
       "content": "I just read that there are man-made droughts, I say imprison all those reponsible.",
       "author": "Derek",
       "id": 5
+    },
+    {
+      "title": "Saturday",
+      "content": "Wantam apologizes, do you think its genuine?",
+      "author": "d",
+      "id": 6
     }
   ]
 }
