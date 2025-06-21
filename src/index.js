@@ -134,6 +134,139 @@ function addNewPostListener() {
       });
   });
 } 
+// Show edit form 
+
+function showEditForm() { 
+
+    const title = postDetail.querySelector("h2").textContent; 
+  
+    const content = postDetail.querySelector("p").textContent; 
+  
+   
+  
+    editTitle.value = title; 
+  
+    editContent.value = content; 
+  
+    editForm.classList.remove("hidden"); 
+  
+  } 
+  
+   
+  
+  // Submit updated post 
+  
+  editForm.addEventListener("submit", (e) => { 
+  
+    e.preventDefault(); 
+  
+   
+  
+    const updatedTitle = editTitle.value.trim(); 
+  
+    const updatedContent = editContent.value.trim(); 
+  
+   
+  
+    if (!updatedTitle || !updatedContent) { 
+  
+      alert("Fields cannot be empty."); 
+  
+      return; 
+  
+    } 
+  
+   
+  
+    fetch(`${BASE_URL}/${currentPostId}`, { 
+  
+      method: "PATCH", 
+  
+      headers: { "Content-Type": "application/json" }, 
+  
+      body: JSON.stringify({ 
+  
+        title: updatedTitle, 
+  
+        content: updatedContent, 
+  
+      }), 
+  
+    }) 
+  
+      .then((res) => { 
+  
+        if (!res.ok) throw new Error("Update failed"); 
+  
+        return res.json(); 
+  
+      }) 
+  
+      .then(() => { 
+  
+        alert("Post updated successfully!"); 
+  
+        displayPosts(); 
+  
+        handlePostClick(currentPostId); 
+  
+        editForm.classList.add("hidden"); 
+  
+      }) 
+  
+      .catch((err) => { 
+  
+        alert("Error: " + err.message); 
+  
+      }); 
+  
+  }); 
+  
+   
+  
+  // Cancel editing 
+  
+  cancelEditBtn.addEventListener("click", () => { 
+  
+    editForm.classList.add("hidden"); 
+  
+  }); 
+  
+   
+  
+  // Delete a post 
+  
+  function handleDeletePost() { 
+  
+    if (!confirm("Are you sure you want to delete this post?")) return; 
+  
+   
+  
+    fetch(`${BASE_URL}/${currentPostId}`, { 
+  
+      method: "DELETE", 
+  
+    }) 
+  
+      .then((res) => { 
+  
+        if (!res.ok) throw new Error("Delete failed"); 
+  
+        displayPosts(); 
+  
+        postDetail.innerHTML = "<p>Select a post to view details.</p>"; 
+  
+        alert("Post deleted."); 
+  
+      }) 
+  
+      .catch((err) => { 
+  
+        alert("Error: " + err.message); 
+  
+      }); 
+  
+  } 
   
    
 

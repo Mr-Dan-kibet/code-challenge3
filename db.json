@@ -7,8 +7,8 @@
       "id": 1
     },
     {
-      "title": "First Ukweli",
-      "content": "I love dogs with short tails. Damn there cute.",
+      "title": "My first Post",
+      "content": "This My first official post!",
       "author": "Jannet Okoth",
       "id": 2
     },
@@ -23,6 +23,12 @@
       "content": "Anyone else think man-made droughts should be criminalized?",
       "author": "Trevor",
       "id": 4
+    },
+    {
+      "title": "Criminalize it",
+      "content": "I just read that there are man-made droughts, I say imprison all those reponsible.",
+      "author": "Derek",
+      "id": 5
     }
   ]
 }
