@@ -40,4 +40,26 @@ function displayPosts() {
       }
     });
 }
+// Fetch and display a post’s full details
+function handlePostClick(id) {
+    fetch(`${BASE_URL}/${id}`)
+      .then(res => res.json())
+      .then(post => {
+        currentPostId = post.id; // Save which post we're currently viewing
+  
+        // Populate detail section with post content and buttons
+        postDetail.innerHTML = `
+          <h2>${post.title}</h2>
+          <p>${post.content}</p>
+          <p><strong>Author:</strong> ${post.author}</p>
+          <button id="edit-btn">Edit</button>
+          <button id="delete-btn">Delete</button>
+        `;
+  
+        // Enable "Edit" and "Delete" buttons
+        document.getElementById('edit-btn').addEventListener('click', showEditForm);
+        document.getElementById('delete-btn').addEventListener('click', handleDeletePost);
+      });
+  }
+  
 
