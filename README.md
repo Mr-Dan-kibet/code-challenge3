@@ -47,8 +47,8 @@ Edit
 
 ```bash
 Run on your trminal;
-git clone 
-cd
+git clone git@github.com:Mr-Dan-kibet/code-challenge3.git
+cd Code-challenge-3
 ```
 ### 2. Install json
 ```Run;
