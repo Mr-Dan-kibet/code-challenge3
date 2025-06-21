@@ -7,15 +7,42 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <h1>Ukweli Social <br> <h4>Where truth is blogged</h4></h1>
+    <h1>Ukweli Social <br> <span style="font-size: 12px;">Where truth is blogged</span></h1>
     <!--POSTING form-->
     <form id="new-post-form">
+        <div class="sizing">
         <h3>Add a New Post</h3>
         <input type="text" name="title" placeholder="Title" required />
         <textarea name="content" placeholder="Content" required></textarea>
         <input type="text" name="author" placeholder="Author" required />
         <button type="submit">Add Post</button>
+    </div>
       </form>
-    <script src="./index.html"></script>
-</body>
-</html>
+    
+      <div id="container"> 
+
+        <!-- Sidebar with all post titles --> 
+    
+        <div id="container"> 
+    
+            <aside class="sidebar"> 
+    
+              <h3>Posts</h3> 
+    
+              <ol id="post-list"></ol> 
+    
+            </aside> 
+    
+        <!-- Main area with full post details --> 
+    
+        <main class="main"> 
+    
+            <div id="post-detail"> 
+    
+              <p>Select a post to view details.</p> 
+    
+            </div> 
+    
+          </main> 
+    
+        </div> 

@@ -6,60 +6,137 @@ const editForm = document.getElementById("edit-post-form");
 const editTitle = document.getElementById("edit-title");
 const editContent = document.getElementById("edit-content");
 const cancelEditBtn = document.getElementById("cancel-edit");
-// Track the currently selected post (used for edit/delete)
-let currentPostId = null;
 
-// Runs after DOM is fully loaded
+let currentPostId = null; //track current slected post
+
 function main() {
-  displayPosts();          
-  addNewPostListener();    
+  displayPosts();
+  addNewPostListener();
 }
-
-// Wait until everything on the page is ready before starting app logic
-document.addEventListener('DOMContentLoaded', main);
+//ensures application starst when DOM is empty
+document.addEventListener("DOMContentLoaded", main);
 
 // Fetch and display all post titles
 function displayPosts() {
-  fetch(BASE_URL)
-    .then(res => res.json())
-    .then(posts => {
-      postList.innerHTML = ''; // Clear existing post list
+  postList.innerHTML = "<p>Loading posts...</p>";
 
-      // Loop through each post from the server
-      posts.forEach(post => {
-        const div = document.createElement('div');
-        div.textContent = post.title;      
-        div.classList.add('post-title');      
-        div.addEventListener('click', () => handlePostClick(post.id)); 
-        postList.appendChild(div);      
+  fetch(BASE_URL)
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to fetch posts");
+      return res.json();
+    })
+    .then((posts) => {
+      //Clear Previous content
+      postList.innerHTML = "";
+      //Handle empty state
+      if (posts.length === 0) {
+        postList.innerHTML = "<p>No posts yet.</p>";
+        postDetail.innerHTML = "<p>Select a post to view details.</p>";
+        return;
+      }
+      // Create list items for each post
+      posts.forEach((post) => {
+        const li = document.createElement("li");
+        li.textContent = post.title;
+        li.dataset.id = post.id;
+        li.classList.add("post-title");
+        postList.appendChild(li);
       });
 
-      // Automatically show the first post's details on page load
-      if (posts.length > 0) {
-        handlePostClick(posts[0].id);
-      }
+      // Auto load first post
+      handlePostClick(posts[0].id);
+    })
+    .catch((err) => {
+      postList.innerHTML = `<p style="color: red;">Error: ${err.message}</p>`;
     });
 }
-// Fetch and display a post’s full details
+
+// Use event delegation to handle clicks
+postList.addEventListener("click", (e) => {
+  if (e.target.tagName === "LI" && e.target.dataset.id) {
+    handlePostClick(e.target.dataset.id);
+  }
+});
+
+// Fetch and display details for one post
 function handlePostClick(id) {
-    fetch(`${BASE_URL}/${id}`)
-      .then(res => res.json())
-      .then(post => {
-        currentPostId = post.id; // Save which post we're currently viewing
-  
-        // Populate detail section with post content and buttons
-        postDetail.innerHTML = `
+  fetch(`${BASE_URL}/${id}`)
+    .then((res) => {
+      if (!res.ok) throw new Error("Post not found");
+      return res.json();
+    })
+    .then((post) => {
+      currentPostId = post.id;
+
+      postDetail.innerHTML = `
+        <article>
           <h2>${post.title}</h2>
           <p>${post.content}</p>
           <p><strong>Author:</strong> ${post.author}</p>
           <button id="edit-btn">Edit</button>
           <button id="delete-btn">Delete</button>
-        `;
-  
-        // Enable "Edit" and "Delete" buttons
-        document.getElementById('edit-btn').addEventListener('click', showEditForm);
-        document.getElementById('delete-btn').addEventListener('click', handleDeletePost);
+        </article>
+      `;
+
+      document
+        .getElementById("edit-btn")
+        .addEventListener("click", showEditForm);
+      document
+        .getElementById("delete-btn")
+        .addEventListener("click", handleDeletePost);
+    })
+    .catch((err) => {
+      postDetail.innerHTML = `<p style="color: red;">Error loading post: ${err.message}</p>`;
+    });
+}
+
+// Add new post. inclusive eror handling
+
+function addNewPostListener() {
+  newPostForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const title = e.target.title.value.trim();
+
+    const content = e.target.content.value.trim();
+
+    const author = e.target.author.value.trim();
+
+    if (!title || !content || !author) {
+      alert("Please fill in all fields.");
+
+      return;
+    }
+    //Submit to API
+    fetch(BASE_URL, {
+      method: "POST",
+
+      headers: { "Content-Type": "application/json" },
+
+      body: JSON.stringify({ title, content, author }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to create post");
+
+        return res.json();
+      })
+
+      .then(() => {
+        alert("Post added successfully!");
+
+        displayPosts();
+
+        newPostForm.reset();
+      })
+
+      .catch((err) => {
+        alert("Error: " + err.message);
       });
-  }
+  });
+} 
+  
+   
+
+  
   
 
