@@ -31,10 +31,14 @@ Code-challenge-3/
 ├── index.html
 ├── db.json
 ├── css/
-│ └── style.css
+│   └── style.css
 ├── src/
-│ └── index.js
+│   └── index.js
+├── images/
+│   └── screenshot.png
 └── README.md
+
+
 
 bash
 Copy
@@ -69,9 +73,11 @@ Moringa School
 
 ## Preview
 
+![App Screenshot](./images/screenshot.png)
+
 
  ## License
-
+Mr Dan kibet @ 2025
  ---
 
 
