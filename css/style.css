@@ -62,6 +62,8 @@ body {
     padding: 8px; 
     border-radius: 4px; 
     border: 1px solid #ddd; 
+    color: #3cb929;
+    font-family: cursive;
   } 
 
    /*  Button base styling
@@ -91,7 +93,7 @@ body {
   }
   
   #post-list{
-    color: rgb(109, 6, 206);
+    color:#3cb929 ;
   }
 
   /*For hidding the edit form*/
